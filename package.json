@@ -1,5 +1,5 @@
 {
-  "name": "emoji-backup",
+  "name": "di-emoji-backup",
   "version": "0.0.1",
   "description": "A DiscordInjections plugin to back up emoji history.",
   "main": "index.js",
