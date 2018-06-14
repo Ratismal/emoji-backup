@@ -1,8 +1,9 @@
 const React = require('react');
-const { SettingsTitle, SettingsDescription, SettingsList, SettingsOptionButton, SettingsOptionTitle } = require('elements');
+const { SettingsTitle, SettingsDescription, SettingsOptionDescription,
+    SettingsList, SettingsOptionButton, SettingsOptionTitle } = require('elements');
 const moment = require('moment');
 const remote = require('electron').remote;
-
+const path = require('path');
 
 let plugin;
 module.exports = function (p) {
@@ -59,10 +60,11 @@ module.exports = function (p) {
                     <SettingsDescription text="A utility to backup and restore emoji usage history." />
 
                     <SettingsOptionTitle text="Stored Cache" />
+                    <SettingsOptionDescription text={'Your cache file is located at: ' + path.join(__dirname, 'cache.json')} />
                     <SettingsList length={p.cache.length} itemRenderer={itemRenderer} />
 
                     <SettingsOptionTitle text="Online Sync" />
-                    <div className='online-sync'>Coming soon maybe idk</div>
+                    <SettingsOptionDescription text="coming soon maybe idk probably not" />
 
                 </div>
             );
