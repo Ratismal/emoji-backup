@@ -4,6 +4,7 @@ const { SettingsTitle, SettingsDescription, SettingsOptionDescription,
 const moment = require('moment');
 const remote = require('electron').remote;
 const path = require('path');
+const pack = require('./package.json');
 
 let plugin;
 module.exports = function (p) {
@@ -56,7 +57,7 @@ module.exports = function (p) {
             }
             return (
                 <div>
-                    <SettingsDescription text="A utility to backup and restore emoji usage history." />
+                    <SettingsDescription text={"A utility to backup and restore emoji usage history. Version: " + pack.version} />
 
                     <SettingsOptionTitle text="Stored Cache" />
                     <SettingsOptionDescription text={'Your cache file is located at: ' + path.join(__dirname, 'cache.json')} />
