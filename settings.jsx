@@ -7,7 +7,6 @@ const path = require('path');
 
 let plugin;
 module.exports = function (p) {
-    console.log(require('electron'));
     plugin = p;
     return class Settings extends React.PureComponent {
         render() {

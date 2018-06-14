@@ -21,8 +21,6 @@ module.exports = class commands extends Plugin {
      * Contains all the loading logic, that does depend on the DOM or other plugins
      */
     load() {
-        console.log(require('elements'));
-
         this.log('Emoji-Backup has been loaded!');
         this.interval();
         this._interval = setInterval(1000 * 60 * 30, this.interval.bind(this)); // every half hour
@@ -68,8 +66,6 @@ module.exports = class commands extends Plugin {
         let s1 = this.serializeHistory(this.latest.history);
         let current = JSON.parse(this.DI.localStorage.EmojiUsageHistory);
         let s2 = this.serializeHistory(current);
-
-        console.log(s1, s2);
 
         if (s1 !== s2) {
             cache.push({ date: Date.now(), history: current });
