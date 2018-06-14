@@ -25,12 +25,14 @@ module.exports = class commands extends Plugin {
 
         this.log('Emoji-Backup has been loaded!');
         this.interval();
-        setInterval(1000 * 60 * 30, this.interval.bind(this)); // every half hour
+        this._interval = setInterval(1000 * 60 * 30, this.interval.bind(this)); // every half hour
     }
     /**
      * Stuff to do on unload (e.g. freeing resources, timers and event handlers)
      */
-    unload() { }
+    unload() {
+        clearInterval(this._interval);
+    }
 
     get latest() {
         return cache[cache.length - 1];
