@@ -1,6 +1,7 @@
 const React = require('react');
 const { SettingsTitle, SettingsDescription, SettingsOptionDescription,
-    SettingsList, SettingsOptionButton, SettingsOptionTitle } = require('elements');
+    SettingsList, SettingsOptionButton, SettingsOptionTitle,
+    SettingsOptionTextbox } = require('elements');
 const moment = require('moment');
 const remote = require('electron').remote;
 const path = require('path');
@@ -55,12 +56,19 @@ module.exports = function (p) {
                     </div>
                 );
             }
+
+            function onPathApply() {
+                p.log('reloading and saving new cache file');
+                p.reloadCache();
+            }
+
             return (
                 <div>
                     <SettingsDescription text={"A utility to backup and restore emoji usage history. Version: " + pack.version} />
 
                     <SettingsOptionTitle text="Stored Cache" />
-                    <SettingsOptionDescription text={'Your cache file is located at: ' + path.join(__dirname, 'cache.json')} />
+                    <SettingsOptionTextbox title='Cache Location' description='Where to store your history cache.'
+                        apply lsNode='cachePath' plugin={p} onApply={onPathApply} />
                     <SettingsList length={p.cache.length} itemRenderer={itemRenderer} />
 
                     <SettingsOptionTitle text="Online Sync" />

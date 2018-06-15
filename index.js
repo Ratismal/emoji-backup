@@ -2,11 +2,7 @@ const { Plugin } = require('elements');
 
 const Settings = require('./settings');
 let cache;
-try {
-    cache = require('./cache.json');
-} catch (err) {
-    cache = [];
-}
+
 const fs = require('fs');
 const path = require('path');
 
@@ -16,6 +12,16 @@ module.exports = class commands extends Plugin {
      */
     preload() {
         this.registerSettingsTab('Emoji Backup', Settings(this));
+
+        try {
+            cache = JSON.parse(
+                fs.readFileSync(this.getSettingsNode('cachePath',
+                    path.join(__dirname, '..', 'di-emoji-backup-cache.json')),
+                    { encoding: 'utf8' })
+            );
+        } catch (err) {
+            cache = [];
+        }
     }
     /**
      * Contains all the loading logic, that does depend on the DOM or other plugins
@@ -73,9 +79,26 @@ module.exports = class commands extends Plugin {
         }
     }
 
-    saveCache() {
+    reloadCache() {
         return new Promise((res, rej) => {
-            fs.writeFile(path.join(__dirname, 'cache.json'), JSON.stringify(cache), err => {
+            fs.exists(this.getSettingsNode('cachePath'), exists => {
+                if (exists) {
+                    fs.readFile(this.getSettingsNode('cachePath'), { encoding: 'utf8' }, (err, data) => {
+                        try {
+                            cache = JSON.parse(data);
+                        } catch (err) {
+                            res(this.saveCache());
+                        }
+                    });
+                } else res(this.saveCache());
+            });
+        });
+    }
+
+    saveCache() {
+        this.log('Saving cache...');
+        return new Promise((res, rej) => {
+            fs.writeFile(this.getSettingsNode('cachePath'), JSON.stringify(cache), err => {
                 if (err) rej(err);
                 else res();
             });
