@@ -69,7 +69,7 @@ module.exports = function (p) {
                     <SettingsOptionTitle text="Stored Cache" />
                     <SettingsOptionTextbox title='Cache Location' description='Where to store your history cache.'
                         apply lsNode='cachePath' plugin={p} onApply={onPathApply} />
-                    <SettingsList length={p.cache.length} itemRenderer={itemRenderer} />
+                    <SettingsList length={c.length} itemRenderer={itemRenderer} />
 
                     <SettingsOptionTitle text="Online Sync" />
                     <SettingsOptionDescription text="coming soon maybe idk probably not" />
