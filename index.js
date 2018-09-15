@@ -70,11 +70,12 @@ module.exports = class commands extends Plugin {
         }
 
         let s1 = this.serializeHistory(this.latest.history);
-        let current = JSON.parse(this.DI.localStorage.EmojiUsageHistory);
-        let s2 = this.serializeHistory(current);
+        let current = JSON.parse(this.DI.localStorage.EmojiStore);
+        let s2 = this.serializeHistory(current._state.usageHistory);
 
         if (s1 !== s2) {
             cache.push({ date: Date.now(), history: current });
+            if (cache.length > 30) cache.shift();
             await this.saveCache();
         }
     }

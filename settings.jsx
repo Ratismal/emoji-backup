@@ -40,7 +40,9 @@ module.exports = function (p) {
                 });
                 function onClick() {
                     if (confirm('Restoring your emoji history will require a discord restart. Is this OK?')) {
-                        p.DI.localStorage.setItem('EmojiUsageHistory', JSON.stringify(ph));
+                        let store = JSON.parse(p.DI.localStorage.getItem('EmojiStore'));
+                        store._state.usageHistory = ph;
+                        p.DI.localStorage.setItem('EmojiStore', JSON.stringify(store));
                         let win = remote.getCurrentWindow();
                         win.reload();
                     }
