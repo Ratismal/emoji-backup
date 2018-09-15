@@ -16,7 +16,7 @@ module.exports = function (p) {
             c.reverse();
             c = c.slice(0, 15);
             function itemRenderer(id) {
-                let ph = c[id].history;
+                let ph = c[id].history._state.usageHistory;
                 let history = Object.keys(ph).map(k => {
                     let o = ph[k];
                     o.name = k;

@@ -47,6 +47,7 @@ module.exports = class commands extends Plugin {
     }
 
     serializeHistory(history) {
+        history = history._state.usageHistory;
         history = Object.keys(history).map(k => {
             let o = history[k];
             o.name = k;
@@ -64,14 +65,14 @@ module.exports = class commands extends Plugin {
         if (cache.length === 0) {
             cache.push({
                 date: Date.now(),
-                history: JSON.parse(this.DI.localStorage.EmojiUsageHistory)
+                history: JSON.parse(this.DI.localStorage.EmojiStore)
             });
             return await this.saveCache();
         }
 
         let s1 = this.serializeHistory(this.latest.history);
         let current = JSON.parse(this.DI.localStorage.EmojiStore);
-        let s2 = this.serializeHistory(current._state.usageHistory);
+        let s2 = this.serializeHistory(current);
 
         if (s1 !== s2) {
             cache.push({ date: Date.now(), history: current });
