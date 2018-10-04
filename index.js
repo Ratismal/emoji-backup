@@ -75,6 +75,8 @@ module.exports = class commands extends Plugin {
 
         if (s1 !== s2) {
             cache.push({ date: Date.now(), history: current });
+            if (cache.length > 20)
+                cache.shift();
             await this.saveCache();
         }
     }
