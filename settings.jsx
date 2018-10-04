@@ -16,7 +16,7 @@ module.exports = function (p) {
             c.reverse();
             c = c.slice(0, 15);
             function itemRenderer(id) {
-                let ph = c[id].history;
+                let ph = c[id].history._state.usageHistory;
                 let history = Object.keys(ph).map(k => {
                     let o = ph[k];
                     o.name = k;
@@ -40,7 +40,9 @@ module.exports = function (p) {
                 });
                 function onClick() {
                     if (confirm('Restoring your emoji history will require a discord restart. Is this OK?')) {
-                        p.DI.localStorage.setItem('EmojiUsageHistory', JSON.stringify(ph));
+                        let store = JSON.parse(p.DI.localStorage.getItem('EmojiStore'));
+                        store._state.usageHistory = ph;
+                        p.DI.localStorage.setItem('EmojiStore', JSON.stringify(store));
                         let win = remote.getCurrentWindow();
                         win.reload();
                     }
